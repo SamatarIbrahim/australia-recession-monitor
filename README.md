@@ -11,7 +11,7 @@ npm ci
 npm run dev
 ```
 
-Open the local URL printed by the server. Data refreshes when opened; the Refresh data button fetches again. No API key is required.
+Open the local URL printed by the server. Data refreshes on page load, every 15 minutes while the page is visible, and when you return to a hidden tab. The Refresh data button fetches again. Overlapping requests are prevented, and the timer/listener are cleaned up when the page unmounts. No API key is required.
 
 ```sh
 npm run build
@@ -62,3 +62,7 @@ Official API endpoints:
 - https://data.api.abs.gov.au/rest/data/ABS,LF_UNDER/M23.3.1599.20.AUS.M?startPeriod=2019
 
 The expanded panel's calculation checks cover ratio-based purchasing power, missing base periods, unmatched quarters, and the distinction between annual recovery and cumulative loss. All six API fetches succeeded during local verification. Production build and TypeScript checks passed.
+
+## Automatic updates
+
+Data comes from live ABS API requests, so new statistical releases do not require a GitHub commit or redeployment. An open visible dashboard refreshes every 15 minutes. Hidden tabs pause polling and refresh when visible again. No scheduled data download, API key, or user credentials are required. This repository contains a server-backed application; GitHub Pages alone cannot run its /api/indicators endpoint. The application must be run locally or deployed to a compatible server/Cloudflare Worker host. GitHub stores the source code and is not the live website.
